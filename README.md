@@ -2,9 +2,27 @@
 
 ## REST Endpoints
 Every endpoint accepts the URL parameter 'currency' with values like 'GBP', 'EUR', 'USD', etc. The parameter is used to calculate the prices.
+Secured endpoints, indicated by @JWTTokenNeeded require the HTTP Authorization header set to the value 'Bearer <JWT>'.
 
-### GET /api
-???
+### POST /api/login
+Endpoint to perform authentication and receive a JWT.
+
+#### POST Body
+```javascript
+{
+    "user": String,
+    "password": String
+}
+```
+
+#### Return Value
+The HTTP Authorization header is set to 'Bearer <JWT>'.
+```javascript
+{
+    "success": true|false,
+    "token": String
+}
+```
 
 ### GET /api/car
 
@@ -23,6 +41,7 @@ Endpoint to retrieve a complete list of all cars registered.
 ```
 
 ### POST /api/car/
+**@JWTTokenNeeded**
 
 Endpoint used to create a new car.
 Parameters are mandatory.
@@ -61,10 +80,24 @@ Endpoint used to query a specific car.
 }
 ```
 
+### DELETE /api/car/{ID}
+**@JWTTokenNeeded**
+
+Endpoitn used to delete a specific car.
+
+### Return Value
+```javascript
+{
+    "success": true|false
+}
+```
+
+
 ### PUT /api/car/{ID}
 ???
 
 ### POST /api/car/{ID}/rent
+**@JWTTokenNeeded**
 
 Endpoint to rent a given car.
 Parameter 'date' is mandatory.
@@ -87,6 +120,7 @@ Location is optional.
 ```
 
 ### POST /api/car/{ID}/return
+**@JWTTokenNeeded**
 
 Endpoint to return a car.
 Return location is necessary.
